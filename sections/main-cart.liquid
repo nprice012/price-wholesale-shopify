@@ -1,21 +1,52 @@
-<section class="page-shell">
+<section class="page-shell cart-page">
   <div class="container">
     {% if customer.b2b? %}
-      <h1 class="page-title">Your Order</h1>
+      <div class="cart-heading">
+        <p class="eyebrow">Wholesale ordering</p>
+        <h1 class="page-title">Your Order</h1>
+        <p class="page-lead">Review your products and quantities before checking out.</p>
+      </div>
+
       {% if cart.item_count == 0 %}
-        <p>Your order is empty.</p>
-        <a class="btn btn-primary" href="{{ routes.collections_url }}">Browse Wholesale Products</a>
+        <div class="empty-cart">
+          <h2>Your order is empty.</h2>
+          <p>Browse the wholesale catalog to add products to your order.</p>
+          <a class="btn btn-primary" href="{{ routes.collections_url }}">Browse Wholesale Products</a>
+        </div>
       {% else %}
-        <form action="{{ routes.cart_url }}" method="post">
-          {% for item in cart.items %}
-            <div style="display:grid;grid-template-columns:1fr auto;gap:20px;padding:20px 0;border-bottom:1px solid var(--line);">
-              <div><strong>{{ item.product.title }}</strong><div>{{ item.variant.title }}</div><div>{{ item.final_line_price | money }}</div></div>
-              <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" style="width:90px;padding:10px;border:1px solid var(--line);height:44px;">
-            </div>
-          {% endfor %}
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:28px;">
+        <form class="cart-form" action="{{ routes.cart_url }}" method="post">
+          <div class="cart-items">
+            {% for item in cart.items %}
+              <article class="cart-item">
+                <a class="cart-item-image" href="{{ item.url }}">
+                  {% if item.image %}
+                    <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.image.alt | default: item.product.title | escape }}" loading="lazy">
+                  {% endif %}
+                </a>
+                <div class="cart-item-info">
+                  {% if item.vendor != blank %}<p class="cart-vendor">{{ item.vendor }}</p>{% endif %}
+                  <h2><a href="{{ item.url }}">{{ item.product.title }}</a></h2>
+                  {% unless item.product.has_only_default_variant %}<p class="cart-variant">{{ item.variant.title }}</p>{% endunless %}
+                  {% if item.sku != blank %}<p class="cart-sku">SKU: {{ item.sku }}</p>{% endif %}
+                  <div class="cart-unit-price">{{ item.final_price | money }} each</div>
+                  <a class="cart-remove" href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0">Remove</a>
+                </div>
+                <div class="cart-item-quantity">
+                  <label for="Quantity-{{ section.id }}-{{ forloop.index }}">Qty</label>
+                  <input id="Quantity-{{ section.id }}-{{ forloop.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity for {{ item.product.title | escape }}">
+                </div>
+                <div class="cart-item-total">{{ item.final_line_price | money }}</div>
+              </article>
+            {% endfor %}
+          </div>
+
+          <div class="cart-actions">
             <button class="btn btn-outline" type="submit">Update Order</button>
-            <div style="text-align:right"><strong style="font-size:24px;">{{ cart.total_price | money }}</strong><br><button class="btn btn-primary" type="submit" name="checkout">Proceed to Checkout</button></div>
+            <div class="cart-summary">
+              <div class="cart-total"><span>Order Total</span><strong>{{ cart.total_price | money }}</strong></div>
+              <p>Final taxes, shipping and payment terms are handled at checkout.</p>
+              <button class="btn btn-primary checkout-button" type="submit" name="checkout">Proceed to Checkout</button>
+            </div>
           </div>
         </form>
       {% endif %}
@@ -23,13 +54,51 @@
       <p class="eyebrow">Customer Login Required</p>
       <h1 class="page-title">Wholesale ordering is for approved customers.</h1>
       <p class="page-lead">Log in with your Price Wholesale B2B customer account to access pricing and place an order.</p>
-      <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;">
+      <div class="login-actions">
         <a class="btn btn-primary" href="{{ routes.account_login_url }}">Customer Login</a>
         <a class="btn btn-outline" href="/pages/become-a-customer">Become a Customer</a>
       </div>
     {% endif %}
   </div>
 </section>
+
+<style>
+  .cart-heading { max-width:720px; margin-bottom:28px; }
+  .cart-heading .page-lead { margin-top:10px; }
+  .empty-cart { padding:52px 30px; text-align:center; background:#f7f8fa; border:1px solid var(--line); }
+  .empty-cart h2 { margin:0 0 8px; color:#12386b; }
+  .empty-cart p { margin:0 0 22px; color:#64748b; }
+  .cart-items { border-top:1px solid var(--line); }
+  .cart-item { display:grid; grid-template-columns:100px minmax(0,1fr) 90px 120px; gap:22px; align-items:center; padding:20px 0; border-bottom:1px solid var(--line); }
+  .cart-item-image { width:100px; height:100px; display:flex; align-items:center; justify-content:center; background:#f7f8fa; border:1px solid #dbe3ec; }
+  .cart-item-image img { width:100%; height:100%; object-fit:contain; padding:8px; }
+  .cart-vendor { margin:0 0 5px; color:#d71920; font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+  .cart-item-info h2 { margin:0; font-size:17px; line-height:1.25; }
+  .cart-item-info h2 a { color:#12386b; text-decoration:none; }
+  .cart-variant,.cart-sku,.cart-unit-price { margin:5px 0 0; color:#64748b; font-size:12px; }
+  .cart-remove { display:inline-block; margin-top:9px; color:#b42318; font-size:12px; font-weight:700; text-decoration:none; }
+  .cart-item-quantity label { display:block; margin-bottom:6px; color:#12386b; font-size:11px; font-weight:800; }
+  .cart-item-quantity input { width:80px; height:44px; padding:0 10px; border:1px solid #cbd5e1; font-size:15px; }
+  .cart-item-total { color:#12386b; font-size:17px; font-weight:900; text-align:right; }
+  .cart-actions { display:flex; align-items:flex-start; justify-content:space-between; gap:30px; margin-top:28px; }
+  .cart-summary { min-width:320px; text-align:right; }
+  .cart-total { display:flex; justify-content:flex-end; align-items:baseline; gap:18px; }
+  .cart-total span { color:#64748b; font-size:13px; font-weight:700; }
+  .cart-total strong { color:#12386b; font-size:28px; }
+  .cart-summary p { margin:8px 0 16px; color:#64748b; font-size:11px; line-height:1.45; }
+  .checkout-button { min-width:220px; }
+  .login-actions { margin-top:28px; display:flex; gap:12px; flex-wrap:wrap; }
+  @media (max-width:700px) {
+    .cart-item { grid-template-columns:80px minmax(0,1fr); gap:14px; }
+    .cart-item-image { width:80px; height:80px; }
+    .cart-item-quantity { grid-column:2; }
+    .cart-item-total { grid-column:2; text-align:left; }
+    .cart-actions { flex-direction:column; }
+    .cart-summary { min-width:0; width:100%; text-align:left; }
+    .cart-total { justify-content:space-between; }
+    .checkout-button { width:100%; }
+  }
+</style>
 
 {% schema %}
 {"name":"Cart","settings":[]}
