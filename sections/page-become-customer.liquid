@@ -1,0 +1,42 @@
+<section class="page-shell">
+  <div class="container customer-apply">
+    <p class="eyebrow">Become a Customer</p>
+    <h1 class="page-title">Bring Price Wholesale to your business.</h1>
+    <p class="page-lead">Interested in carrying our products? Tell us about your business and a member of our team will follow up about opening a wholesale account.</p>
+
+    <div class="apply-grid">
+      <div>
+        <h2>Wholesale account request</h2>
+        {% form 'contact', id: 'PriceWholesaleCustomerForm' %}
+          {% if form.posted_successfully? %}
+            <div class="form-success">Thanks. We received your request and will be in touch.</div>
+          {% endif %}
+          {{ form.errors | default_errors }}
+          <div class="form-grid">
+            <label>Business name<input type="text" name="contact[business_name]" required></label>
+            <label>Contact name<input type="text" name="contact[name]" required></label>
+            <label>Email<input type="email" name="contact[email]" required></label>
+            <label>Phone<input type="tel" name="contact[phone]"></label>
+            <label>Business type<input type="text" name="contact[business_type]" placeholder="Convenience store, restaurant, etc."></label>
+            <label>City / ZIP<input type="text" name="contact[location]"></label>
+          </div>
+          <label>Tell us about your business<textarea name="contact[body]" rows="6" placeholder="Products you're interested in, number of locations, delivery needs, etc."></textarea></label>
+          <button class="btn btn-primary" type="submit">Submit Request</button>
+        {% endform %}
+      </div>
+      <aside class="apply-aside">
+        <strong>Already a customer?</strong>
+        <p>Use your customer account to access wholesale pricing and place an online order.</p>
+        <a class="btn btn-outline" href="{{ routes.account_login_url }}">Customer Login</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Become a Customer",
+  "settings": [],
+  "presets": [{"name":"Become a Customer"}]
+}
+{% endschema %}
