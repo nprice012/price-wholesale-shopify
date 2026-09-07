@@ -79,17 +79,18 @@
       {% paginate collection.products by 24 %}
         <div class="product-grid">
           {% for product in collection.products %}
+            {% assign display_title = product.title | replace: '*', '' | replace: 'PWI 2.5gal', 'Price Wholesale 2.5 Gallon' | replace: 'PWI 8 oz', 'Price Wholesale 8 oz' | replace: 'J&J 3gal', 'J&J 3 Gallon' | replace: 'J&J 3 gal', 'J&J 3 Gallon' | replace: 'TH 18.5oz', 'Turkey Hill 18.5 oz' | replace: 'TH HG', 'Turkey Hill Half Gallon' | replace: 'TH GAL', 'Turkey Hill Gallon' | replace: 'Turkey Hill 48oz', 'Turkey Hill 48 oz' | replace: '48oz', '48 oz' | replace: '18.5oz', '18.5 oz' | replace: '16oz', '16 oz' | replace: '15.2oz', '15.2 oz' | replace: '14oz', '14 oz' | replace: '11.5oz', '11.5 oz' | replace: '6oz', '6 oz' | replace: '8ct.', '8 ct.' | replace: '8ct', '8 ct' | replace: '24ct.', '24 ct.' | replace: '24ct', '24 ct' | replace: '12ct.', '12 ct.' | replace: '12ct', '12 ct' | replace: '6 pk', '6-pack' | replace: 'Nesquick', 'Nesquik' | replace: 'V-8', 'V8' | replace: 'Edys', "Edy's" | replace: 'Ben & Jerrys', "Ben & Jerry's" | replace: 'Haagen Dazs', 'Häagen-Dazs' | strip %}
             <article class="product-card">
               <a class="product-image-wrap" href="{{ product.url }}">
                 {% if product.featured_image %}
-                  <img src="{{ product.featured_image | image_url: width: 700 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy">
+                  <img src="{{ product.featured_image | image_url: width: 700 }}" alt="{{ display_title | escape }}" loading="lazy">
                 {% else %}
                   <div class="product-image-placeholder">{{ product.vendor | default: 'Price Distribution' }}</div>
                 {% endif %}
               </a>
               <div class="product-card-body">
                 {% if product.vendor != blank %}<p class="product-vendor">{{ product.vendor }}</p>{% endif %}
-                <h2><a href="{{ product.url }}">{{ product.title }}</a></h2>
+                <h2><a href="{{ product.url }}">{{ display_title }}</a></h2>
                 {% if customer.b2b? %}
                   <div class="product-price">{{ product.price | money }}{% if product.price_varies %}<span>+</span>{% endif %}</div>
                 {% else %}
