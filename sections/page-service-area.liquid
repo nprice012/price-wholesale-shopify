@@ -1,26 +1,40 @@
-<section class="page-shell">
+<section class="page-shell service-page">
   <div class="container">
-    <p class="eyebrow">Service Area</p>
-    <h1 class="page-title">Serving Baltimore &amp; Washington.</h1>
+    <p class="eyebrow">Service area</p>
+    <h1 class="page-title">Local distribution. Reliable service.</h1>
+    <p class="page-lead">Price Distribution serves businesses throughout the Baltimore and Washington market, with a focus on dependable delivery and long-term customer relationships.</p>
+
     <div class="service-grid">
       <div class="service-copy">
-        <h2>Local distribution. Long-term relationships.</h2>
-        <p>Price Wholesale Distribution serves businesses throughout the Baltimore and Washington market. Our service is built around dependable delivery, quality brands and the personal attention of a family-owned distributor.</p>
-        <p>Contact us to confirm service availability for your location.</p>
+        <h2>Serving the businesses that serve our communities.</h2>
+        <p>We work with convenience stores, independent retailers, restaurants, institutions and other foodservice operators throughout our service area.</p>
+        <p>Not sure whether we deliver to your location? Contact us and we'll be happy to confirm service availability.</p>
+        <a class="btn btn-primary" href="/pages/contact">Contact Us</a>
       </div>
-      <div class="service-map-placeholder">
+      <div class="service-market">
+        <span class="service-market-label">Our market</span>
         <strong>Baltimore</strong>
-        <span>Washington</span>
-        <small>Baltimore &amp; Washington Market</small>
+        <span class="service-market-divider">&amp;</span>
+        <strong>Washington</strong>
+        <small>and surrounding communities</small>
       </div>
     </div>
   </div>
 </section>
 
+<style>
+  .service-page .page-lead { max-width:760px; }
+  .service-grid { margin-top:48px; }
+  .service-copy { padding:12px 0; }
+  .service-copy h2 { margin-bottom:16px; }
+  .service-copy .btn { margin-top:10px; }
+  .service-market { min-height:380px; padding:46px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:#fff; background:linear-gradient(145deg,#082b5c,#0b4ea2); }
+  .service-market-label { margin-bottom:24px; color:#c9dced; font-size:11px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; }
+  .service-market strong { font-size:clamp(42px,5vw,62px); line-height:1; font-weight:900; }
+  .service-market-divider { margin:9px 0; color:#d71920; font-size:22px; font-weight:900; }
+  .service-market small { margin-top:25px; color:#c9dced; font-size:13px; }
+</style>
+
 {% schema %}
-{
-  "name": "Service Area",
-  "settings": [],
-  "presets": [{"name":"Service Area"}]
-}
+{"name":"Service Area","settings":[],"presets":[{"name":"Service Area"}]}
 {% endschema %}
