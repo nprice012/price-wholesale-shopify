@@ -10,8 +10,8 @@
   {
     "name": "Colors",
     "settings": [
-      {"type":"color","id":"navy","label":"Navy","default":"#102A43"},
-      {"type":"color","id":"red","label":"Red","default":"#C62828"}
+      {"type":"color","id":"navy","label":"Navy","default":"#12386B"},
+      {"type":"color","id":"red","label":"Red","default":"#D71920"}
     ]
   }
 ]
