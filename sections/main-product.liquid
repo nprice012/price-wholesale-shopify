@@ -1,0 +1,37 @@
+<section class="page-shell">
+  <div class="container">
+    <div class="history-grid">
+      <div>
+        {% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.featured_image.alt | escape }}" style="width:100%;border:1px solid var(--line);">{% endif %}
+      </div>
+      <div>
+        <p class="eyebrow" style="color:var(--red)">{{ product.vendor }}</p>
+        <h1 class="page-title">{{ product.title }}</h1>
+        {% if customer %}
+          <p style="font-size:24px;font-weight:800;color:var(--navy);">{{ product.selected_or_first_available_variant.price | money }}</p>
+          {% form 'product', product %}
+            <label for="Quantity-{{ section.id }}">Case quantity</label>
+            <input id="Quantity-{{ section.id }}" type="number" name="quantity" min="1" value="1" style="display:block;width:120px;padding:12px;margin:8px 0 16px;border:1px solid var(--line);">
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button class="btn btn-primary" type="submit"{% unless product.selected_or_first_available_variant.available %} disabled{% endunless %}>{% if product.selected_or_first_available_variant.available %}Add to Order{% else %}Out of Stock{% endif %}</button>
+          {% endform %}
+        {% else %}
+          <div class="card" style="margin-top:24px;">
+            <h3>Wholesale pricing is available to approved customers.</h3>
+            <p>Already a Price Wholesale customer? Log in to view pricing and place your order.</p>
+            <a class="btn btn-primary" href="{{ routes.account_login_url }}">Customer Login</a>
+          </div>
+        {% endif %}
+        {% if product.description != blank %}<div class="rte" style="margin-top:30px;">{{ product.description }}</div>{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [],
+  "presets": [{"name":"Product"}]
+}
+{% endschema %}
