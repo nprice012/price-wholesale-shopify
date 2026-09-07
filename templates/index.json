@@ -1,10 +1,42 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": {"type": "home-hero"},
-    "features": {"type": "home-features"},
-    "categories": {"type": "home-categories"},
-    "history": {"type": "home-history"},
-    "cta": {"type": "home-cta"}
+    "hero": {
+      "type": "home-hero",
+      "settings": {
+        "hero_image": "shopify://shop_images/ChatGPT_Image_Sep_7_2026_01_28_53_PM.png"
+      }
+    },
+    "features": {
+      "type": "home-features",
+      "settings": {}
+    },
+    "categories": {
+      "type": "home-categories",
+      "settings": {}
+    },
+    "history": {
+      "type": "home-history",
+      "settings": {}
+    },
+    "cta": {
+      "type": "home-cta",
+      "settings": {}
+    }
   },
-  "order": ["hero", "features", "categories", "history", "cta"]
+  "order": [
+    "hero",
+    "features",
+    "categories",
+    "history",
+    "cta"
+  ]
 }
