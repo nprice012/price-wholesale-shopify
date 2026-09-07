@@ -6,34 +6,61 @@
 
     <div class="apply-grid">
       <div>
-        <h2>Request a Wholesale Account</h2>
+        <h2>New Customer Application</h2>
+        <p class="application-intro">Please complete the application below. Providing complete business information helps us review your account and determine the best service for your location.</p>
         {% form 'contact', id: 'PriceWholesaleCustomerForm' %}
           {% if form.posted_successfully? %}
-            <div class="form-success">Thanks. We received your request. Our team will be in touch.</div>
+            <div class="form-success">Thanks. We received your application. Our team will review it and contact you.</div>
           {% endif %}
           {{ form.errors | default_errors }}
+
+          <div class="form-section-title">Business Information</div>
           <div class="form-grid">
-            <label>Business Name<input type="text" name="contact[business_name]" required></label>
-            <label>Contact Name<input type="text" name="contact[name]" required></label>
-            <label>Email<input type="email" name="contact[email]" required></label>
-            <label>Phone<input type="tel" name="contact[phone]"></label>
-            <label>Business Type<input type="text" name="contact[business_type]" placeholder="Convenience store, grocery, restaurant, etc."></label>
-            <label>City / ZIP<input type="text" name="contact[location]"></label>
+            <label>Legal Business Name *<input type="text" name="contact[business_name]" autocomplete="organization" required></label>
+            <label>DBA / Store Name<input type="text" name="contact[dba]" autocomplete="organization"></label>
+            <label>Business Type *<select name="contact[business_type]" required><option value="">Select one</option><option>Convenience Store</option><option>Grocery Store</option><option>Restaurant</option><option>Ice Cream / Dessert</option><option>Foodservice</option><option>Other</option></select></label>
+            <label>Number of Locations<input type="number" name="contact[number_of_locations]" min="1" value="1"></label>
           </div>
-          <label>Tell us about your business<textarea name="contact[body]" rows="6" placeholder="Number of locations, products you're interested in, delivery needs, and anything else we should know."></textarea></label>
-          <button class="btn btn-primary" type="submit">Request an Account</button>
+
+          <div class="form-section-title">Business Address</div>
+          <div class="form-grid">
+            <label>Street Address *<input type="text" name="contact[address]" autocomplete="street-address" required></label>
+            <label>City *<input type="text" name="contact[city]" autocomplete="address-level2" required></label>
+            <label>State *<input type="text" name="contact[state]" autocomplete="address-level1" required></label>
+            <label>ZIP Code *<input type="text" name="contact[zip]" autocomplete="postal-code" required></label>
+          </div>
+
+          <div class="form-section-title">Primary Contact</div>
+          <div class="form-grid">
+            <label>Contact Name *<input type="text" name="contact[name]" autocomplete="name" required></label>
+            <label>Title / Position<input type="text" name="contact[title]"></label>
+            <label>Email *<input type="email" name="contact[email]" autocomplete="email" required></label>
+            <label>Phone *<input type="tel" name="contact[phone]" autocomplete="tel" required></label>
+          </div>
+
+          <div class="form-section-title">Ordering &amp; Delivery</div>
+          <div class="form-grid">
+            <label>Products of Interest<input type="text" name="contact[products]" placeholder="Ice cream, beverages, snacks, etc."></label>
+            <label>Preferred Delivery Days<input type="text" name="contact[delivery_days]" placeholder="If known"></label>
+          </div>
+          <label>Additional Information<textarea name="contact[body]" rows="6" placeholder="Tell us anything that would help us understand your business, locations, product needs or delivery requirements."></textarea></label>
+
+          <p class="application-note">By submitting this application, you are requesting a wholesale account. Submission does not guarantee account approval.</p>
+          <button class="btn btn-primary" type="submit">Submit Customer Application</button>
         {% endform %}
       </div>
+
       <aside class="apply-aside">
         <strong>How it works</strong>
         <ol class="apply-steps">
-          <li><b>Apply</b><span>Tell us about your business.</span></li>
-          <li><b>Approval</b><span>Our team reviews your account request.</span></li>
-          <li><b>Order</b><span>Sign in and access your wholesale catalog.</span></li>
+          <li><b>Apply</b><span>Complete the customer application.</span></li>
+          <li><b>Review</b><span>Our team reviews your business and service needs.</span></li>
+          <li><b>Approval</b><span>Approved customers receive B2B account access.</span></li>
+          <li><b>Order</b><span>Sign in to view wholesale pricing and place orders.</span></li>
         </ol>
         <div class="aside-divider"></div>
         <strong>Already a customer?</strong>
-        <p>Sign in to view your wholesale pricing and place an order.</p>
+        <p>Sign in to access your wholesale catalog and pricing.</p>
         <a class="btn btn-outline" href="{{ routes.account_login_url }}">Customer Login</a>
       </aside>
     </div>
@@ -41,14 +68,19 @@
 </section>
 
 <style>
-  .customer-apply .page-lead { max-width:760px; }
-  .apply-steps { list-style:none; padding:0; margin:22px 0 0; display:grid; gap:20px; }
+  .customer-apply .page-lead { max-width:800px; }
+  .application-intro { color:#64748b; margin:-5px 0 28px; max-width:720px; }
+  .form-section-title { margin:32px 0 17px; padding-bottom:9px; border-bottom:2px solid #12386b; color:#12386b; font-size:16px; font-weight:900; }
+  .form-section-title:first-of-type { margin-top:0; }
+  .form-grid select { width:100%; margin-top:7px; border:1px solid #cbd5e1; border-radius:4px; padding:13px 14px; background:#fff; color:#18212b; }
+  .application-note { color:#64748b; font-size:12px; line-height:1.5; margin:6px 0 18px; }
+  .apply-steps { list-style:none; padding:0; margin:22px 0 0; display:grid; gap:20px; counter-reset:item; }
   .apply-steps li { display:grid; grid-template-columns:28px 1fr; gap:10px; }
   .apply-steps li:before { content:counter(item); counter-increment:item; width:28px; height:28px; display:grid; place-items:center; border-radius:50%; background:#12386b; color:#fff; font-size:12px; font-weight:800; }
-  .apply-steps { counter-reset:item; }
   .apply-steps b { display:block; color:#12386b; font-size:15px; line-height:1.2; }
   .apply-steps span { display:block; margin-top:2px; color:#64748b; font-size:13px; line-height:1.4; }
   .aside-divider { height:1px; background:#dbe3ec; margin:28px 0; }
+  @media (max-width:640px) { .form-section-title { margin-top:26px; } }
 </style>
 
 {% schema %}
