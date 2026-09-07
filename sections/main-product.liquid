@@ -10,24 +10,51 @@
       <div class="product-info">
         {% if product.vendor != blank %}<p class="eyebrow">{{ product.vendor }}</p>{% endif %}
         <h1 class="page-title">{{ product.title }}</h1>
-        {% if product.description != blank %}<div class="rte product-description">{{ product.description }}</div>{% endif %}
 
         {% if customer.b2b? %}
-          <div class="order-panel">
-            <div class="product-price-large">{{ product.selected_or_first_available_variant.price | money }}{% if product.price_varies %}<span>+</span>{% endif %}</div>
+          {% assign current_variant = product.selected_or_first_available_variant %}
+
+          {% if product.description != blank %}<div class="rte product-description">{{ product.description }}</div>{% endif %}
+
+          <div class="product-details">
+            {% if current_variant.sku != blank %}<div><span>SKU</span>{{ current_variant.sku }}</div>{% endif %}
+            {% if product.metafields.custom.case_pack != blank %}<div><span>Case pack</span>{{ product.metafields.custom.case_pack }}</div>{% endif %}
+          </div>
+
+          <div class="order-panel" data-product-form>
+            <div class="product-price-large" data-price>{{ current_variant.price | money }}{% if product.price_varies %}<span>+</span>{% endif %}</div>
             <p class="price-note">Wholesale price for your account</p>
+
             {% form 'product', product %}
-              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+              {% unless product.has_only_default_variant %}
+                <div class="variant-options">
+                  {% for option in product.options_with_values %}
+                    <div class="variant-option">
+                      <label for="Option-{{ section.id }}-{{ forloop.index0 }}">{{ option.name }}</label>
+                      <select id="Option-{{ section.id }}-{{ forloop.index0 }}" data-option-index="{{ forloop.index0 }}">
+                        {% for value in option.values %}
+                          <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endunless %}
+
               <div class="order-row">
                 <div>
                   <label for="Quantity-{{ section.id }}">Quantity</label>
-                  <input id="Quantity-{{ section.id }}" type="number" name="quantity" min="1" value="1">
+                  <input id="Quantity-{{ section.id }}" type="number" name="quantity" min="{{ current_variant.quantity_rule.min | default: 1 }}"{% if current_variant.quantity_rule.max %} max="{{ current_variant.quantity_rule.max }}"{% endif %} step="{{ current_variant.quantity_rule.increment | default: 1 }}" value="{{ current_variant.quantity_rule.min | default: 1 }}" data-quantity>
                 </div>
-                <button class="btn btn-primary" type="submit"{% unless product.selected_or_first_available_variant.available %} disabled{% endunless %}>{% if product.selected_or_first_available_variant.available %}Add to Order{% else %}Out of Stock{% endif %}</button>
+                <button class="btn btn-primary" type="submit" data-add-button{% unless current_variant.available %} disabled{% endunless %}>{% if current_variant.available %}Add to Order{% else %}Out of Stock{% endif %}</button>
               </div>
+              <p class="variant-status" data-status aria-live="polite"></p>
             {% endform %}
           </div>
         {% else %}
+          {% if product.description != blank %}<div class="rte product-description">{{ product.description }}</div>{% endif %}
           <div class="login-panel">
             <h2>Wholesale ordering for approved customers.</h2>
             <p>Log in to see your account pricing and place an order online.</p>
@@ -40,6 +67,76 @@
   </div>
 </section>
 
+{% if customer.b2b? %}
+<script type="application/json" data-product-variants>
+  {{ product.variants | json }}
+</script>
+<script>
+  (function () {
+    var root = document.querySelector('[data-product-form]');
+    var variantData = document.querySelector('[data-product-variants]');
+    if (!root || !variantData) return;
+
+    var variants;
+    try { variants = JSON.parse(variantData.textContent); } catch (error) { return; }
+
+    var selects = Array.prototype.slice.call(root.querySelectorAll('[data-option-index]'));
+    var idInput = root.querySelector('[data-variant-id]');
+    var price = root.querySelector('[data-price]');
+    var quantity = root.querySelector('[data-quantity]');
+    var button = root.querySelector('[data-add-button]');
+    var status = root.querySelector('[data-status]');
+    var currency = '{{ shop.currency }}';
+
+    function formatMoney(cents) {
+      try {
+        return new Intl.NumberFormat(undefined, { style: 'currency', currency: currency }).format(cents / 100);
+      } catch (error) {
+        return '$' + (cents / 100).toFixed(2);
+      }
+    }
+
+    function selectedOptions() {
+      return selects.map(function (select) { return select.value; });
+    }
+
+    function findVariant() {
+      var selected = selectedOptions();
+      return variants.find(function (variant) {
+        return variant.options.every(function (value, index) { return value === selected[index]; });
+      });
+    }
+
+    function updateVariant() {
+      var variant = findVariant();
+      if (!variant) {
+        idInput.value = '';
+        button.disabled = true;
+        button.textContent = 'Unavailable';
+        status.textContent = 'This combination is not available.';
+        return;
+      }
+
+      idInput.value = variant.id;
+      price.innerHTML = formatMoney(variant.price) + ({{ product.price_varies | json }} ? '<span>+</span>' : '');
+      button.disabled = !variant.available;
+      button.textContent = variant.available ? 'Add to Order' : 'Out of Stock';
+      status.textContent = variant.available ? '' : 'This option is currently out of stock.';
+
+      var min = variant.quantity_rule && variant.quantity_rule.min ? variant.quantity_rule.min : 1;
+      var max = variant.quantity_rule && variant.quantity_rule.max ? variant.quantity_rule.max : null;
+      var step = variant.quantity_rule && variant.quantity_rule.increment ? variant.quantity_rule.increment : 1;
+      quantity.min = min;
+      quantity.step = step;
+      if (max) quantity.max = max; else quantity.removeAttribute('max');
+      if (!quantity.value || Number(quantity.value) < min) quantity.value = min;
+    }
+
+    selects.forEach(function (select) { select.addEventListener('change', updateVariant); });
+  })();
+</script>
+{% endif %}
+
 <style>
   .product-layout { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr); gap:64px; align-items:start; }
   .product-main-image { background:#f7f8fa; border:1px solid #dbe3ec; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; }
@@ -47,21 +144,29 @@
   .product-info { padding-top:8px; }
   .product-info .page-title { margin-bottom:20px; }
   .product-description { color:#4b5563; line-height:1.7; }
+  .product-details { display:flex; flex-wrap:wrap; gap:10px 24px; margin-top:22px; padding:14px 0; border-top:1px solid #dbe3ec; border-bottom:1px solid #dbe3ec; color:#334155; font-size:13px; }
+  .product-details div { display:flex; gap:7px; }
+  .product-details span { color:#64748b; font-weight:800; text-transform:uppercase; letter-spacing:.08em; font-size:10px; }
   .order-panel { margin-top:28px; padding:24px; background:#f7f8fa; border:1px solid #dbe3ec; }
   .product-price-large { color:#12386b; font-size:30px; line-height:1; font-weight:900; }
   .product-price-large span { margin-left:2px; }
   .price-note { margin:7px 0 22px; color:#64748b; font-size:12px; }
+  .variant-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-bottom:18px; }
+  .variant-option label { display:block; margin-bottom:7px; color:#12386b; font-size:12px; font-weight:800; }
+  .variant-option select { width:100%; height:46px; padding:0 12px; border:1px solid #cbd5e1; background:#fff; color:#1e293b; font-size:14px; }
   .order-row { display:flex; align-items:end; gap:12px; }
   .order-row label { display:block; margin-bottom:7px; color:#12386b; font-size:12px; font-weight:800; }
   .order-row input { width:90px; height:46px; padding:0 12px; border:1px solid #cbd5e1; background:#fff; font-size:16px; }
   .order-row .btn { height:46px; }
+  .variant-status { min-height:18px; margin:10px 0 0; color:#b42318; font-size:12px; }
   .login-panel { margin-top:28px; padding:28px; border-left:4px solid #d71920; background:#f7f8fa; }
   .login-panel h2 { margin:0 0 8px; color:#12386b; font-size:21px; line-height:1.25; }
   .login-panel p { margin:0 0 18px; color:#64748b; line-height:1.55; }
   .text-link { display:block; margin-top:15px; color:#0b4ea2; font-size:13px; font-weight:700; text-decoration:none; }
   .text-link:hover { color:#d71920; }
   @media (max-width:800px) { .product-layout { grid-template-columns:1fr; gap:34px; } .product-info { padding-top:0; } }
-  @media (max-width:480px) { .order-row { align-items:stretch; flex-direction:column; } .order-row .btn { width:100%; } }
+  @media (max-width:560px) { .variant-options { grid-template-columns:1fr; } }
+  @media (max-width:480px) { .order-row { align-items:stretch; flex-direction:column; } .order-row input { width:100%; } .order-row .btn { width:100%; } }
 </style>
 
 {% schema %}
