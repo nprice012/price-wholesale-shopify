@@ -1,9 +1,10 @@
 {
   "sections": {
     "hero": {"type": "home-hero"},
+    "features": {"type": "home-features"},
     "categories": {"type": "home-categories"},
     "history": {"type": "home-history"},
     "cta": {"type": "home-cta"}
   },
-  "order": ["hero", "categories", "history", "cta"]
+  "order": ["hero", "features", "categories", "history", "cta"]
 }
