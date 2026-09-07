@@ -20,8 +20,8 @@
       <aside class="apply-aside">
         <strong>Price Wholesale Distribution</strong>
         <p>Family owned since 1921.<br>Serving the Baltimore &amp; Washington market.</p>
-        {% if settings.company_phone != blank %}<p><strong>Phone</strong><br>{{ settings.company_phone }}</p>{% endif %}
-        {% if settings.company_email != blank %}<p><strong>Email</strong><br>{{ settings.company_email }}</p>{% endif %}
+        <p><strong>Phone</strong><br><a href="tel:4436045677">443-604-5677</a></p>
+        <p><strong>Email</strong><br><a href="mailto:Nprice.icd@gmail.com">Nprice.icd@gmail.com</a></p>
         <div class="aside-divider"></div>
         <strong>Looking to open an account?</strong>
         <p>Start with our wholesale account request and tell us about your business.</p>
@@ -33,6 +33,8 @@
 
 <style>
   .aside-divider { height:1px; background:#dbe3ec; margin:28px 0; }
+  .apply-aside a:not(.btn) { color:var(--navy); font-weight:700; text-decoration:none; }
+  .apply-aside a:not(.btn):hover { text-decoration:underline; }
 </style>
 
 {% schema %}
