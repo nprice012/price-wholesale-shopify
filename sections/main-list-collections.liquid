@@ -2,28 +2,30 @@
   <div class="container">
     <p class="eyebrow">Wholesale catalog</p>
     <h1 class="page-title">Products</h1>
-    <p class="page-lead">Browse the brands and product categories available through Price Distribution.</p>
+    <p class="page-lead">Browse our wholesale products by category.</p>
+
+    {% assign category_handles = 'food,beverages,ice-cream' | split: ',' %}
+    {% assign category_titles = 'Food,Beverages,Ice Cream' | split: ',' %}
+    {% assign category_descriptions = 'Food products for the stores and businesses we serve.,Cold and shelf-stable beverages from the brands your customers know.,Ice cream, novelties, and frozen treats for your freezer set.' | split: ',' %}
 
     <div class="collection-grid">
-      {% for collection in collections %}
-        {% unless collection.handle == 'frontpage' %}
-          <a class="collection-card" href="{{ collection.url }}">
-            <div class="collection-image">
-              {% if collection.featured_image %}
-                <img src="{{ collection.featured_image | image_url: width: 900 }}" alt="{{ collection.title | escape }}" loading="lazy">
-              {% else %}
-                <div class="collection-image-placeholder">{{ collection.title }}</div>
-              {% endif %}
-            </div>
-            <div class="collection-card-body">
-              <span>{{ collection.all_products_count }} products</span>
-              <h2>{{ collection.title }}</h2>
-              <strong>Browse Products <span aria-hidden="true">→</span></strong>
-            </div>
-          </a>
-        {% endunless %}
-      {% else %}
-        <div class="empty-catalog"><h2>Wholesale catalog coming soon.</h2><p>We're preparing the product catalog for approved Price Distribution customers.</p></div>
+      {% for handle in category_handles %}
+        {% assign collection = collections[handle] %}
+        <a class="collection-card" href="{% if collection %}{{ collection.url }}{% else %}{{ routes.collections_url }}/{{ handle }}{% endif %}">
+          <div class="collection-image">
+            {% if collection and collection.featured_image %}
+              <img src="{{ collection.featured_image | image_url: width: 900 }}" alt="{{ category_titles[forloop.index0] | escape }}" loading="lazy">
+            {% else %}
+              <div class="collection-image-placeholder">{{ category_titles[forloop.index0] }}</div>
+            {% endif %}
+          </div>
+          <div class="collection-card-body">
+            {% if collection %}<span>{{ collection.all_products_count }} products</span>{% else %}<span>Wholesale category</span>{% endif %}
+            <h2>{{ category_titles[forloop.index0] }}</h2>
+            <p>{{ category_descriptions[forloop.index0] }}</p>
+            <strong>Browse Products <span aria-hidden="true">→</span></strong>
+          </div>
+        </a>
       {% endfor %}
     </div>
   </div>
@@ -36,17 +38,14 @@
   .collection-card:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(18,56,107,.1); }
   .collection-image { aspect-ratio:1.45/1; background:#f7f8fa; overflow:hidden; }
   .collection-image img { width:100%; height:100%; object-fit:cover; display:block; }
-  .collection-image-placeholder { width:100%; height:100%; display:grid; place-items:center; padding:25px; text-align:center; color:#12386b; font-size:24px; font-weight:900; }
+  .collection-image-placeholder { width:100%; height:100%; display:grid; place-items:center; padding:25px; text-align:center; color:#12386b; font-size:28px; font-weight:900; }
   .collection-card-body { padding:22px; }
   .collection-card-body > span { color:#d71920; font-size:11px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
-  .collection-card h2 { margin:7px 0 14px; color:#12386b; font-size:24px; line-height:1.1; }
+  .collection-card h2 { margin:7px 0 8px; color:#12386b; font-size:28px; line-height:1.1; }
+  .collection-card p { margin:0 0 16px; color:#64748b; font-size:14px; line-height:1.5; }
   .collection-card strong { color:#0b4ea2; font-size:13px; }
   .collection-card strong span { margin-left:5px; }
-  .empty-catalog { grid-column:1/-1; padding:42px; background:#f7f8fa; border-top:4px solid #12386b; }
-  .empty-catalog h2 { margin:0 0 8px; color:#12386b; }
-  .empty-catalog p { margin:0; color:#64748b; }
-  @media (max-width:800px) { .collection-grid { grid-template-columns:repeat(2,1fr); } }
-  @media (max-width:520px) { .collection-grid { grid-template-columns:1fr; } }
+  @media (max-width:800px) { .collection-grid { grid-template-columns:1fr; } }
 </style>
 
 {% schema %}
