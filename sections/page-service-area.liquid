@@ -1,22 +1,44 @@
 <section class="page-shell service-page">
   <div class="container">
     <p class="eyebrow">Service area</p>
-    <h1 class="page-title">Local distribution. Reliable service.</h1>
-    <p class="page-lead">Price Distribution serves businesses throughout the Baltimore and Washington market, with a focus on dependable delivery and long-term customer relationships.</p>
+    <h1 class="page-title">Serving the Baltimore–Washington region.</h1>
+    <p class="page-lead">Price Wholesale Distribution delivers to wholesale customers throughout the Baltimore and Washington market and surrounding communities.</p>
 
-    <div class="service-grid">
-      <div class="service-copy">
-        <h2>Serving the businesses that serve our communities.</h2>
-        <p>We work with convenience stores, independent retailers, restaurants, institutions and other foodservice operators throughout our service area.</p>
-        <p>Not sure whether we deliver to your location? Contact us and we'll be happy to confirm service availability.</p>
-        <a class="btn btn-primary" href="/pages/contact">Contact Us</a>
+    <div class="service-map-wrap">
+      <div class="service-map-copy">
+        <span class="service-map-label">Our market</span>
+        <h2>Local distribution with regional reach.</h2>
+        <p>Our location in the Hanover area puts us in the middle of the Baltimore–Washington corridor, allowing us to serve businesses across the region.</p>
+        <p>We work with convenience stores, independent retailers, restaurants, institutions and other foodservice operators.</p>
+        <a class="btn btn-primary" href="/pages/contact">Confirm Your Delivery Area</a>
       </div>
-      <div class="service-market">
-        <span class="service-market-label">Our market</span>
+
+      <div class="service-map-frame">
+        <iframe
+          title="Baltimore-Washington regional service area map centered on Hanover, Maryland"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-77.35%2C38.75%2C-76.35%2C39.45&amp;layer=mapnik&amp;marker=39.154%2C-76.724"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <div class="service-map-caption">
+          <span><strong>Hanover, MD</strong> — central to our Baltimore–Washington market</span>
+          <a href="https://www.openstreetmap.org/?mlat=39.154&amp;mlon=-76.724#map=9/39.154/-76.724" target="_blank" rel="noopener">View larger map</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-region-bar">
+      <div>
         <strong>Baltimore</strong>
-        <span class="service-market-divider">&amp;</span>
+        <span>North</span>
+      </div>
+      <div class="service-region-center">
+        <strong>Hanover</strong>
+        <span>Our location</span>
+      </div>
+      <div>
         <strong>Washington</strong>
-        <small>and surrounding communities</small>
+        <span>Southwest</span>
       </div>
     </div>
   </div>
@@ -24,15 +46,38 @@
 
 <style>
   .service-page .page-lead { max-width:760px; }
-  .service-grid { margin-top:48px; }
-  .service-copy { padding:12px 0; }
-  .service-copy h2 { margin-bottom:16px; }
-  .service-copy .btn { margin-top:10px; }
-  .service-market { min-height:380px; padding:46px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:#fff; background:linear-gradient(145deg,#082b5c,#0b4ea2); }
-  .service-market-label { margin-bottom:24px; color:#c9dced; font-size:11px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; }
-  .service-market strong { font-size:clamp(42px,5vw,62px); line-height:1; font-weight:900; }
-  .service-market-divider { margin:9px 0; color:#d71920; font-size:22px; font-weight:900; }
-  .service-market small { margin-top:25px; color:#c9dced; font-size:13px; }
+  .service-map-wrap { margin-top:46px; display:grid; grid-template-columns:minmax(280px,.78fr) minmax(0,1.45fr); gap:30px; align-items:stretch; }
+  .service-map-copy { padding:34px 8px 34px 0; align-self:center; }
+  .service-map-label { display:block; margin-bottom:14px; color:#d71920; font-size:11px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; }
+  .service-map-copy h2 { max-width:470px; margin:0 0 16px; font-size:clamp(30px,3.2vw,44px); line-height:1.06; }
+  .service-map-copy p { max-width:500px; color:#536274; }
+  .service-map-copy .btn { margin-top:10px; }
+  .service-map-frame { overflow:hidden; background:#eef2f5; border:1px solid #d9e0e7; box-shadow:0 12px 30px rgba(8,43,92,.10); }
+  .service-map-frame iframe { display:block; width:100%; height:500px; border:0; }
+  .service-map-caption { min-height:54px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:16px; background:#fff; font-size:12px; line-height:1.45; }
+  .service-map-caption strong { color:#082b5c; }
+  .service-map-caption a { color:#082b5c; font-weight:800; white-space:nowrap; text-decoration:none; }
+  .service-map-caption a:hover { color:#d71920; }
+  .service-region-bar { margin-top:24px; padding:22px 26px; display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px solid #d9e0e7; border-bottom:1px solid #d9e0e7; }
+  .service-region-bar > div { padding:0 22px; text-align:center; border-right:1px solid #d9e0e7; }
+  .service-region-bar > div:first-child { padding-left:0; text-align:left; }
+  .service-region-bar > div:last-child { padding-right:0; text-align:right; border-right:0; }
+  .service-region-bar strong { display:block; color:#082b5c; font-size:18px; }
+  .service-region-bar span { display:block; margin-top:3px; color:#6d7885; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+  .service-region-center strong { color:#d71920; }
+  @media (max-width:900px) {
+    .service-map-wrap { grid-template-columns:1fr; gap:18px; }
+    .service-map-copy { padding:10px 0 4px; }
+    .service-map-frame iframe { height:420px; }
+  }
+  @media (max-width:600px) {
+    .service-map-frame iframe { height:360px; }
+    .service-map-caption { align-items:flex-start; flex-direction:column; gap:6px; }
+    .service-region-bar { grid-template-columns:1fr; gap:16px; }
+    .service-region-bar > div,
+    .service-region-bar > div:first-child,
+    .service-region-bar > div:last-child { padding:0; text-align:center; border-right:0; }
+  }
 </style>
 
 {% schema %}
