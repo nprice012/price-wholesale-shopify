@@ -1,0 +1,4 @@
+{
+  "sections": {"main": {"type":"page-about"}},
+  "order": ["main"]
+}
