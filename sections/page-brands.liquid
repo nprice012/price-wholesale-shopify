@@ -1,25 +1,39 @@
-<section class="page-shell">
+<section class="page-shell brands-page">
   <div class="container">
-    <p class="eyebrow">Our Brands</p>
-    <h1 class="page-title">Quality brands for the businesses you serve.</h1>
-    <p class="page-lead">We distribute a selection of established ice cream, beverage and food brands throughout the Baltimore and Washington market.</p>
+    <p class="eyebrow">Our brands</p>
+    <h1 class="page-title">Brands your customers know.</h1>
+    <p class="page-lead">We distribute established ice cream, beverage and food brands to businesses throughout the Baltimore and Washington market.</p>
+
     <div class="brand-grid">
-      <div>Good Humor</div>
-      <div>Turkey Hill</div>
-      <div>Nestlé Ice Cream</div>
-      <div>Häagen-Dazs</div>
-      <div>Simply</div>
-      <div>V8</div>
-      <div>Ben &amp; Jerry's</div>
-      <div>Apple &amp; Eve</div>
+      <div><strong>Good Humor</strong><span>Ice Cream</span></div>
+      <div><strong>Turkey Hill</strong><span>Ice Cream &amp; Beverages</span></div>
+      <div><strong>Nestlé Ice Cream</strong><span>Ice Cream</span></div>
+      <div><strong>Häagen-Dazs</strong><span>Ice Cream</span></div>
+      <div><strong>Simply</strong><span>Beverages</span></div>
+      <div><strong>V8</strong><span>Beverages</span></div>
+      <div><strong>Ben &amp; Jerry's</strong><span>Ice Cream</span></div>
+      <div><strong>Apple &amp; Eve</strong><span>Beverages</span></div>
+    </div>
+
+    <div class="brands-note">
+      <div><p class="eyebrow">Looking for something specific?</p><h2>Tell us what your business needs.</h2></div>
+      <a class="btn btn-primary" href="/pages/contact">Contact Us</a>
     </div>
   </div>
 </section>
 
+<style>
+  .brands-page .brand-grid { margin-top:44px; }
+  .brand-grid div { min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:7px; padding:25px; border:1px solid #dbe3ec; background:#fff; color:#12386b; text-align:center; }
+  .brand-grid div:nth-child(even) { background:#f7f8fa; }
+  .brand-grid strong { font-size:22px; line-height:1.15; }
+  .brand-grid span { color:#64748b; font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+  .brands-note { margin-top:54px; padding:34px 38px; display:flex; align-items:center; justify-content:space-between; gap:25px; background:#f7f8fa; border-top:4px solid #12386b; }
+  .brands-note .eyebrow { margin-bottom:7px; }
+  .brands-note h2 { margin:0; color:#12386b; font-size:28px; line-height:1.1; }
+  @media (max-width:600px) { .brands-note { align-items:flex-start; flex-direction:column; padding:28px; } }
+</style>
+
 {% schema %}
-{
-  "name": "Brands",
-  "settings": [],
-  "presets": [{"name":"Brands"}]
-}
+{"name":"Brands","settings":[],"presets":[{"name":"Brands"}]}
 {% endschema %}
