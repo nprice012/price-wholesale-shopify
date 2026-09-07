@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Price Wholesale",
+    "settings": [
+      {"type":"text","id":"company_phone","label":"Phone","default":""},
+      {"type":"text","id":"company_email","label":"Email","default":""},
+      {"type":"text","id":"service_area","label":"Service area","default":"Baltimore & Washington"}
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {"type":"color","id":"navy","label":"Navy","default":"#102A43"},
+      {"type":"color","id":"red","label":"Red","default":"#C62828"}
+    ]
+  }
+]
