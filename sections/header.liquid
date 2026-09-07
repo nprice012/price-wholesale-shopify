@@ -1,0 +1,45 @@
+<header class="site-header">
+  <div class="announcement">FAMILY OWNED SINCE 1921 · SERVING THE BALTIMORE &amp; WASHINGTON MARKET</div>
+  <div class="container header-main">
+    <a class="brand" href="{{ routes.root_url }}" aria-label="Price Wholesale Distribution home">
+      <span class="brand-mark">PWD</span>
+      <span>
+        <span class="brand-name">PRICE WHOLESALE</span>
+        <span class="brand-sub">DISTRIBUTION</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Main navigation">
+      <a href="{{ routes.root_url }}">Home</a>
+      <a href="{{ routes.collections_url }}">Products</a>
+      <a href="/pages/brands">Brands</a>
+      <a href="/pages/about-us">About Us</a>
+      <a href="/pages/service-area">Service Area</a>
+      <a href="/pages/contact">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn-outline" href="{{ routes.account_login_url }}">Customer Login</a>
+      <a class="btn btn-primary" href="/pages/become-a-customer">Become a Customer</a>
+      <button class="btn btn-outline" type="button" data-menu-toggle aria-expanded="false" aria-label="Open menu">Menu</button>
+    </div>
+  </div>
+  <nav class="container" data-mobile-nav hidden aria-label="Mobile navigation" style="padding:0 0 16px;">
+    <div style="display:grid;gap:10px;font-weight:700;">
+      <a href="{{ routes.root_url }}">Home</a>
+      <a href="{{ routes.collections_url }}">Products</a>
+      <a href="/pages/brands">Brands</a>
+      <a href="/pages/about-us">About Us</a>
+      <a href="/pages/service-area">Service Area</a>
+      <a href="/pages/contact">Contact</a>
+      <a href="{{ routes.account_login_url }}">Customer Login</a>
+    </div>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}
