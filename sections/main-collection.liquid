@@ -1,0 +1,31 @@
+<section class="page-shell">
+  <div class="container">
+    <p class="eyebrow" style="color:var(--red)">Wholesale catalog</p>
+    <h1 class="page-title">{{ collection.title }}</h1>
+    {% if collection.description != blank %}<div class="rte">{{ collection.description }}</div>{% endif %}
+    <div class="cards" style="margin-top:36px;">
+      {% for product in collection.products %}
+        <article class="card">
+          {% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 700 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" style="aspect-ratio:1/1;object-fit:cover;margin:-28px -28px 20px;width:calc(100% + 56px);">{% endif %}
+          <div class="card-kicker">{{ product.vendor }}</div>
+          <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+          {% if customer %}
+            <p>{{ product.price | money }}{% if product.price_varies %} +{% endif %}</p>
+          {% else %}
+            <p>Wholesale pricing available to approved customers.</p>
+          {% endif %}
+        </article>
+      {% else %}
+        <p>No products are available in this collection yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [],
+  "presets": [{"name":"Collection"}]
+}
+{% endschema %}
