@@ -2,7 +2,14 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-brand">PRICE <span>DISTRIBUTION</span></div>
+        {% if section.settings.logo != blank %}
+          {{ section.settings.logo | image_url: width: 420 | image_tag: class: 'footer-logo', alt: 'Price Wholesale Distribution' }}
+        {% else %}
+          <div class="footer-logo-fallback">
+            <span class="brand-name">PRICE</span>
+            <span class="brand-sub">DISTRIBUTION</span>
+          </div>
+        {% endif %}
         <p class="footer-copy">Family owned since 1921. Serving wholesale customers throughout the Baltimore and Washington market with trusted brands and dependable service.</p>
       </div>
       <div>
@@ -31,9 +38,14 @@
 </footer>
 
 <style>
-.footer-brand{font-size:28px;font-weight:900;font-style:italic;letter-spacing:-.06em;color:#fff}.footer-brand span{display:block;color:#d9e7f6;font-size:13px;font-style:normal;letter-spacing:.14em;margin-top:2px}.footer-copy{max-width:470px}
+.footer-logo{display:block;width:154px;max-width:100%;height:auto;margin-bottom:18px}.footer-logo-fallback{display:inline-flex;flex-direction:column;line-height:.9;margin-bottom:18px;color:#fff}.footer-logo-fallback .brand-name{font-size:34px;font-weight:900;font-style:italic;letter-spacing:-.07em}.footer-logo-fallback .brand-sub{font-size:11px;font-weight:800;letter-spacing:.14em;margin-top:5px;color:#d9e7f6}.footer-copy{max-width:470px}
 </style>
 
 {% schema %}
-{"name":"Footer","settings":[]}
+{
+  "name":"Footer",
+  "settings":[
+    {"type":"image_picker","id":"logo","label":"Footer logo (use the same logo as the header)"}
+  ]
+}
 {% endschema %}
