@@ -2,12 +2,14 @@
   <div class="container">
     <div class="history-grid">
       <div>
-        {% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.featured_image.alt | escape }}" style="width:100%;border:1px solid var(--line);">{% endif %}
+        {% if product.featured_image %}
+          <img src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.featured_image.alt | escape }}" style="width:100%;border:1px solid var(--line);">
+        {% endif %}
       </div>
       <div>
-        <p class="eyebrow" style="color:var(--red)">{{ product.vendor }}</p>
+        <p class="eyebrow">{{ product.vendor }}</p>
         <h1 class="page-title">{{ product.title }}</h1>
-        {% if customer %}
+        {% if customer.b2b? %}
           <p style="font-size:24px;font-weight:800;color:var(--navy);">{{ product.selected_or_first_available_variant.price | money }}</p>
           {% form 'product', product %}
             <label for="Quantity-{{ section.id }}">Case quantity</label>
@@ -18,7 +20,7 @@
         {% else %}
           <div class="card" style="margin-top:24px;">
             <h3>Wholesale pricing is available to approved customers.</h3>
-            <p>Already a Price Wholesale customer? Log in to view pricing and place your order.</p>
+            <p>Already a Price Wholesale customer? Log in with your B2B customer account to view pricing and place your order.</p>
             <a class="btn btn-primary" href="{{ routes.account_login_url }}">Customer Login</a>
           </div>
         {% endif %}
