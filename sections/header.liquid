@@ -28,10 +28,17 @@
           Your Order{% if cart.item_count > 0 %}<span class="order-count">{{ cart.item_count }}</span>{% endif %}
         </a>
       {% endif %}
-      <a class="login-btn" href="{{ routes.account_login_url }}">
-        <span class="login-icon" aria-hidden="true">&#128100;</span>
-        Customer Login
-      </a>
+      {% if customer %}
+        <a class="login-btn" href="{{ routes.account_url }}">
+          <span class="login-icon" aria-hidden="true">&#128100;</span>
+          My Account
+        </a>
+      {% else %}
+        <a class="login-btn" href="{{ routes.account_login_url }}">
+          <span class="login-icon" aria-hidden="true">&#128100;</span>
+          Customer Login
+        </a>
+      {% endif %}
       <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-label="Open menu">Menu</button>
     </div>
   </div>
@@ -45,7 +52,11 @@
     <a href="/pages/become-a-customer">Become a Customer</a>
     <a href="/pages/contact">Contact</a>
     {% if customer.b2b? %}<a href="{{ routes.cart_url }}">Your Order{% if cart.item_count > 0 %} ({{ cart.item_count }}){% endif %}</a>{% endif %}
-    <a href="{{ routes.account_login_url }}">Customer Login</a>
+    {% if customer %}
+      <a href="{{ routes.account_url }}">My Account</a>
+    {% else %}
+      <a href="{{ routes.account_login_url }}">Customer Login</a>
+    {% endif %}
   </nav>
 </header>
 
