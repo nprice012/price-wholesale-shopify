@@ -1,37 +1,55 @@
 <section class="page-shell">
   <div class="container customer-apply">
-    <p class="eyebrow">Become a Customer</p>
-    <h1 class="page-title">Bring Price Wholesale to your business.</h1>
-    <p class="page-lead">Interested in carrying our products? Tell us about your business and a member of our team will follow up about opening a wholesale account.</p>
+    <p class="eyebrow">Wholesale Account</p>
+    <h1 class="page-title">Become a Price Distribution Customer.</h1>
+    <p class="page-lead">Tell us about your business and our team will review your request. Approved customers receive access to wholesale products, pricing and online ordering.</p>
 
     <div class="apply-grid">
       <div>
-        <h2>Wholesale account request</h2>
+        <h2>Request a Wholesale Account</h2>
         {% form 'contact', id: 'PriceWholesaleCustomerForm' %}
           {% if form.posted_successfully? %}
-            <div class="form-success">Thanks. We received your request and will be in touch.</div>
+            <div class="form-success">Thanks. We received your request. Our team will be in touch.</div>
           {% endif %}
           {{ form.errors | default_errors }}
           <div class="form-grid">
-            <label>Business name<input type="text" name="contact[business_name]" required></label>
-            <label>Contact name<input type="text" name="contact[name]" required></label>
+            <label>Business Name<input type="text" name="contact[business_name]" required></label>
+            <label>Contact Name<input type="text" name="contact[name]" required></label>
             <label>Email<input type="email" name="contact[email]" required></label>
             <label>Phone<input type="tel" name="contact[phone]"></label>
-            <label>Business type<input type="text" name="contact[business_type]" placeholder="Convenience store, restaurant, etc."></label>
+            <label>Business Type<input type="text" name="contact[business_type]" placeholder="Convenience store, grocery, restaurant, etc."></label>
             <label>City / ZIP<input type="text" name="contact[location]"></label>
           </div>
-          <label>Tell us about your business<textarea name="contact[body]" rows="6" placeholder="Products you're interested in, number of locations, delivery needs, etc."></textarea></label>
-          <button class="btn btn-primary" type="submit">Submit Request</button>
+          <label>Tell us about your business<textarea name="contact[body]" rows="6" placeholder="Number of locations, products you're interested in, delivery needs, and anything else we should know."></textarea></label>
+          <button class="btn btn-primary" type="submit">Request an Account</button>
         {% endform %}
       </div>
       <aside class="apply-aside">
+        <strong>How it works</strong>
+        <ol class="apply-steps">
+          <li><b>Apply</b><span>Tell us about your business.</span></li>
+          <li><b>Approval</b><span>Our team reviews your account request.</span></li>
+          <li><b>Order</b><span>Sign in and access your wholesale catalog.</span></li>
+        </ol>
+        <div class="aside-divider"></div>
         <strong>Already a customer?</strong>
-        <p>Use your customer account to access wholesale pricing and place an online order.</p>
+        <p>Sign in to view your wholesale pricing and place an order.</p>
         <a class="btn btn-outline" href="{{ routes.account_login_url }}">Customer Login</a>
       </aside>
     </div>
   </div>
 </section>
+
+<style>
+  .customer-apply .page-lead { max-width:760px; }
+  .apply-steps { list-style:none; padding:0; margin:22px 0 0; display:grid; gap:20px; }
+  .apply-steps li { display:grid; grid-template-columns:28px 1fr; gap:10px; }
+  .apply-steps li:before { content:counter(item); counter-increment:item; width:28px; height:28px; display:grid; place-items:center; border-radius:50%; background:#12386b; color:#fff; font-size:12px; font-weight:800; }
+  .apply-steps { counter-reset:item; }
+  .apply-steps b { display:block; color:#12386b; font-size:15px; line-height:1.2; }
+  .apply-steps span { display:block; margin-top:2px; color:#64748b; font-size:13px; line-height:1.4; }
+  .aside-divider { height:1px; background:#dbe3ec; margin:28px 0; }
+</style>
 
 {% schema %}
 {
