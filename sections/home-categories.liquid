@@ -1,0 +1,31 @@
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow" style="color:var(--red)">What we distribute</p>
+      <h2>Products businesses depend on.</h2>
+      <p>Wholesale products for convenience stores, independent retailers, restaurants, institutions and foodservice operators.</p>
+    </div>
+    <div class="cards">
+      <a class="card" href="{{ routes.collections_url }}/ice-cream">
+        <div class="card-kicker">01</div><h3>Ice Cream</h3><p>Pints, tubs, novelties and foodservice frozen products.</p>
+      </a>
+      <a class="card" href="{{ routes.collections_url }}/beverages">
+        <div class="card-kicker">02</div><h3>Beverages</h3><p>Juices, lemonades, teas and other beverage products.</p>
+      </a>
+      <a class="card" href="{{ routes.collections_url }}/snacks">
+        <div class="card-kicker">03</div><h3>Snacks</h3><p>Packaged snacks and convenience products for your customers.</p>
+      </a>
+      <a class="card" href="{{ routes.collections_url }}/foodservice">
+        <div class="card-kicker">04</div><h3>Foodservice</h3><p>Products selected for restaurants, institutions and foodservice operations.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product categories",
+  "settings": [],
+  "presets": [{"name": "Product categories"}]
+}
+{% endschema %}
