@@ -3,11 +3,16 @@
     <div class="cta-copy">
       <p class="cta-eyebrow">Wholesale ordering</p>
       <h2>Ready to order?</h2>
-      <p>Existing Price Distribution customer? Sign in to access your wholesale catalog, pricing and online ordering.</p>
+      <p>Existing Price Distribution customer? Sign in to access your wholesale catalog, account pricing and online ordering.</p>
     </div>
     <div class="cta-actions">
-      <a class="btn" href="{{ routes.account_login_url }}">Customer Login</a>
-      <a class="btn cta-secondary" href="/pages/become-a-customer">Become a Customer</a>
+      {% if customer.b2b? %}
+        <a class="btn" href="{{ routes.collections_url }}">Browse Products</a>
+        <a class="btn cta-secondary" href="{{ routes.cart_url }}">View Your Order{% if cart.item_count > 0 %} ({{ cart.item_count }}){% endif %}</a>
+      {% else %}
+        <a class="btn" href="{{ routes.account_login_url }}">Customer Login</a>
+        <a class="btn cta-secondary" href="/pages/become-a-customer">Become a Customer</a>
+      {% endif %}
     </div>
   </div>
 </section>
