@@ -1,25 +1,30 @@
-<section class="hero">
-  <div class="container hero-grid">
-    <div>
-      <p class="eyebrow">Family owned since 1921</p>
-      <h1>Serving Baltimore &amp; Washington <span>for generations.</span></h1>
-      <p>Price Wholesale Distribution is a family-owned wholesale distributor serving businesses throughout the Baltimore and Washington market with ice cream, beverages, snacks and foodservice products.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="{{ routes.account_login_url }}">Customer Login</a>
-        <a class="btn btn-outline" href="/pages/become-a-customer">Become a Customer</a>
+<section class="hero-banner">
+  {% if section.settings.hero_image != blank %}
+    <div class="hero-media">
+      {{ section.settings.hero_image | image_url: width: 2400 | image_tag: class: 'hero-image', widths: '900, 1200, 1600, 2000, 2400', sizes: '100vw', loading: 'eager', alt: section.settings.hero_image.alt | default: 'Price Distribution — over 100 years of distribution experience' | escape }}
+    </div>
+  {% else %}
+    <div class="hero-placeholder">
+      <div class="hero-placeholder-inner">
+        <p>PRICE DISTRIBUTION</p>
+        <h1>OVER 100 YEARS OF DISTRIBUTION EXPERIENCE</h1>
+        <span>QUALITY BRANDS &nbsp; | &nbsp; RELIABLE SERVICE &nbsp; | &nbsp; SINCE 1921</span>
       </div>
     </div>
-    <div class="hero-card">
-      <strong>1921</strong>
-      <p>More than a century of family ownership, local service and wholesale distribution.</p>
-    </div>
-  </div>
+  {% endif %}
 </section>
 
 {% schema %}
 {
-  "name": "Homepage hero",
-  "settings": [],
-  "presets": [{"name": "Homepage hero"}]
+  "name": "Homepage hero banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero banner image",
+      "info": "Upload the approved Price Distribution banner shown in the design mockup."
+    }
+  ],
+  "presets": [{"name": "Homepage hero banner"}]
 }
 {% endschema %}
