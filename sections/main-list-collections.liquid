@@ -1,112 +1,49 @@
 <section class="page-shell products-page">
   <div class="container">
     <header class="products-header">
-      <div>
-        <p class="eyebrow">Wholesale Catalog</p>
-        <h1 class="page-title">Stock the brands your customers ask for.</h1>
-      </div>
+      <div><p class="eyebrow">Wholesale Catalog</p><h1 class="page-title">Products</h1></div>
       <p class="products-header-copy">Wholesale products for stores, markets, convenience retailers, ice cream shops and other retail operators throughout the Baltimore–Washington region.</p>
     </header>
 
-    <section class="brands-section">
-      <div class="section-heading brands-heading">
-        <div>
-          <p class="eyebrow">Brands we distribute</p>
-          <h2>Shop by brand.</h2>
-        </div>
-        <a href="/pages/brands" class="view-all">View all brands <span aria-hidden="true">→</span></a>
-      </div>
-      <p class="brands-intro">Choose a brand to see the products, package sizes and case formats available to your store.</p>
-
-      <div class="brand-grid">
-        <a class="brand-card" href="/search?q=PWI&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-philadelphia-water-ice.jpg?v=1788810944" alt="Philadelphia Water Ice" loading="eager"></div><div class="brand-card-footer"><strong>Philadelphia Water Ice</strong><span>Water Ice</span></div></a>
-        <a class="brand-card" href="/search?q=Turkey%20Hill&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-turkey-hill.jpg?v=1788810882" alt="Turkey Hill" loading="eager"></div><div class="brand-card-footer"><strong>Turkey Hill</strong><span>Ice Cream &amp; Beverages</span></div></a>
-        <a class="brand-card" href="/search?q=Blue%20Bunny&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-blue-bunny.jpg?v=1788810890" alt="Blue Bunny" loading="eager"></div><div class="brand-card-footer"><strong>Blue Bunny</strong><span>Ice Cream &amp; Novelties</span></div></a>
-        <a class="brand-card" href="/search?q=J%26J&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-jj-snack-foods.jpg?v=1788810927" alt="J&amp;J Snack Foods" loading="eager"></div><div class="brand-card-footer"><strong>J&amp;J</strong><span>Frozen Novelties</span></div></a>
-        <a class="brand-card" href="/search?q=Breyers&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-breyers.jpg?v=1788810903" alt="Breyers" loading="eager"></div><div class="brand-card-footer"><strong>Breyers</strong><span>Ice Cream</span></div></a>
-        <a class="brand-card" href="/search?q=Good%20Humor&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-good-humor.jpg?v=1788810897" alt="Good Humor" loading="eager"></div><div class="brand-card-footer"><strong>Good Humor</strong><span>Frozen Novelties</span></div></a>
-        <a class="brand-card" href="/search?q=Popsicle&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-popsicle.jpg?v=1788810914" alt="Popsicle" loading="eager"></div><div class="brand-card-footer"><strong>Popsicle</strong><span>Frozen Novelties</span></div></a>
-        <a class="brand-card" href="/search?q=Nestle&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-nestle.webp?v=1788810920" alt="Nestlé" loading="eager"></div><div class="brand-card-footer"><strong>Nestlé</strong><span>Frozen Novelties</span></div></a>
-        <a class="brand-card" href="/search?q=Mars&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-mars-ice-cream.webp?v=1788810932" alt="Mars" loading="eager"></div><div class="brand-card-footer"><strong>Mars</strong><span>Ice Cream &amp; Bars</span></div></a>
-        <a class="brand-card" href="/search?q=Magnum&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-magnum.jpg?v=1788810938" alt="Magnum" loading="eager"></div><div class="brand-card-footer"><strong>Magnum</strong><span>Premium Bars</span></div></a>
-      </div>
-    </section>
-
-    <section class="catalog-section">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Shop the catalog</p>
-          <h2>Browse by category.</h2>
-        </div>
-        <p>Looking for a category instead? Choose a department to see everything available.</p>
-      </div>
+    <section class="catalog-categories" aria-labelledby="catalog-heading">
+      <div class="section-heading"><div><p class="eyebrow">Shop the catalog</p><h2 id="catalog-heading">Choose a category.</h2></div></div>
       <div class="category-grid">
         {% assign category_handles = 'ice-cream,beverages,food' | split: ',' %}
         {% assign category_titles = 'Ice Cream & Frozen,Beverages,Food' | split: ',' %}
         {% assign category_descriptions = 'Ice cream, water ice, bars, cups and frozen novelties.,Juices, drinks and beverage products for your cooler.,Food products available through our wholesale catalog.' | split: ',' %}
+        {% assign category_numbers = '01,02,03' | split: ',' %}
         {% for handle in category_handles %}
           {% assign collection = collections[handle] %}
           <a class="category-card" href="{% if collection %}{{ collection.url }}{% else %}{{ routes.collections_url }}/{{ handle }}{% endif %}">
-            <strong>{{ category_titles[forloop.index0] }}</strong>
-            <span>{{ category_descriptions[forloop.index0] }}</span>
-            <em>Shop →</em>
+            <div class="category-topline"><span class="category-number">{{ category_numbers[forloop.index0] }}</span>{% if collection %}<span class="category-count">{{ collection.all_products_count }} products</span>{% endif %}</div>
+            <div class="category-card-content"><h3>{{ category_titles[forloop.index0] }}</h3><p>{{ category_descriptions[forloop.index0] }}</p></div>
+            <span class="category-action">Shop {{ category_titles[forloop.index0] }} <b aria-hidden="true">→</b></span>
           </a>
         {% endfor %}
       </div>
     </section>
 
-    <div class="retailer-callout">
-      <div>
-        <p class="eyebrow">For retail operators</p>
-        <h2>Looking for something specific?</h2>
-        <p>Don't see the brand, flavor or package you need? Contact us and we'll help you find it.</p>
+    <section class="brands-section" aria-labelledby="brands-heading">
+      <div class="section-heading brands-heading"><div><p class="eyebrow">Brands we distribute</p><h2 id="brands-heading">Shop by brand.</h2></div><a href="/pages/brands" class="view-all">View all brands <span aria-hidden="true">→</span></a></div>
+      <p class="brands-intro">Choose a brand to see the products, package sizes and case formats available to your store.</p>
+      <div class="brand-grid">
+        <a class="brand-card" href="/search?q=PWI&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-philadelphia-water-ice.jpg?v=1788810944" alt="Philadelphia Water Ice" loading="lazy"></div><div class="brand-card-footer"><strong>Philadelphia Water Ice</strong><span>Water Ice</span></div></a>
+        <a class="brand-card" href="/search?q=Turkey%20Hill&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-turkey-hill.jpg?v=1788810882" alt="Turkey Hill" loading="lazy"></div><div class="brand-card-footer"><strong>Turkey Hill</strong><span>Ice Cream &amp; Beverages</span></div></a>
+        <a class="brand-card" href="/search?q=Blue%20Bunny&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-blue-bunny.jpg?v=1788810890" alt="Blue Bunny" loading="lazy"></div><div class="brand-card-footer"><strong>Blue Bunny</strong><span>Ice Cream &amp; Novelties</span></div></a>
+        <a class="brand-card" href="/search?q=J%26J&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-jj-snack-foods.jpg?v=1788810927" alt="J&amp;J Snack Foods" loading="lazy"></div><div class="brand-card-footer"><strong>J&amp;J</strong><span>Frozen Novelties</span></div></a>
+        <a class="brand-card" href="/search?q=Breyers&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-breyers.jpg?v=1788810903" alt="Breyers" loading="lazy"></div><div class="brand-card-footer"><strong>Breyers</strong><span>Ice Cream</span></div></a>
+        <a class="brand-card" href="/search?q=Good%20Humor&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-good-humor.jpg?v=1788810897" alt="Good Humor" loading="lazy"></div><div class="brand-card-footer"><strong>Good Humor</strong><span>Frozen Novelties</span></div></a>
+        <a class="brand-card" href="/search?q=Popsicle&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-popsicle.jpg?v=1788810914" alt="Popsicle" loading="lazy"></div><div class="brand-card-footer"><strong>Popsicle</strong><span>Frozen Novelties</span></div></a>
+        <a class="brand-card" href="/search?q=Nestle&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-nestle.webp?v=1788810920" alt="Nestlé" loading="lazy"></div><div class="brand-card-footer"><strong>Nestlé</strong><span>Frozen Novelties</span></div></a>
+        <a class="brand-card" href="/search?q=Mars&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-mars-ice-cream.webp?v=1788810932" alt="Mars" loading="lazy"></div><div class="brand-card-footer"><strong>Mars</strong><span>Ice Cream &amp; Bars</span></div></a>
+        <a class="brand-card" href="/search?q=Magnum&type=product"><div class="brand-logo"><img src="https://cdn.shopify.com/s/files/1/0857/5621/5552/files/brand-magnum.jpg?v=1788810938" alt="Magnum" loading="lazy"></div><div class="brand-card-footer"><strong>Magnum</strong><span>Premium Bars</span></div></a>
       </div>
-      <div class="retailer-actions">
-        <a class="btn btn-primary" href="/pages/become-a-customer">Become a Customer</a>
-        <a class="callout-link" href="/pages/contact">Contact Us <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
+    </section>
   </div>
 </section>
 
 <style>
-  .products-header{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:60px;align-items:end;padding:6px 0 28px;border-bottom:1px solid #dce3ea}
-  .products-header .page-title{margin:0;max-width:800px}
-  .products-header-copy{margin:0 0 4px;color:#68788b;font-size:14px;line-height:1.65;max-width:430px}
-  .brands-section{padding:34px 0 0}
-  .section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:30px}
-  .section-heading h2{margin:0;color:#12386b;font-size:38px;line-height:1.05;letter-spacing:-.02em}
-  .brands-heading{padding-top:0;border-top:0}
-  .brands-intro{margin:9px 0 22px;color:#718096;font-size:13px}
-  .view-all{color:#12386b;font-size:11px;font-weight:900;letter-spacing:.06em;text-decoration:none;text-transform:uppercase;white-space:nowrap}
-  .view-all:hover{color:#d71920}
-  .view-all span{margin-left:5px}
-  .brand-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-  .brand-card{min-width:0;overflow:hidden;background:#fff;border:1px solid #d5dee7;text-decoration:none;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
-  .brand-card:hover{transform:translateY(-2px);border-color:#aebfd0;box-shadow:0 10px 24px rgba(18,56,107,.08)}
-  .brand-logo{height:118px;padding:14px;display:grid;place-items:center;background:#fff}
-  .brand-logo img{display:block;width:100%;height:100%;object-fit:contain}
-  .brand-card-footer{min-height:59px;padding:11px 12px 12px;border-top:1px solid #edf0f3}
-  .brand-card-footer strong{display:block;color:#12386b;font-size:12px;line-height:1.2}
-  .brand-card-footer span{display:block;margin-top:4px;color:#7a8795;font-size:9px}
-  .catalog-section{padding:55px 0 0;margin-top:48px;border-top:1px solid #dce3ea}
-  .catalog-section .section-heading>p{max-width:430px;margin:0;color:#718096;font-size:13px;line-height:1.6}
-  .category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
-  .category-card{min-height:145px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;background:#f5f7f9;border:1px solid #dce3ea;text-decoration:none}
-  .category-card strong{color:#12386b;font-size:23px;line-height:1.1}
-  .category-card span{max-width:360px;color:#687788;font-size:12px;line-height:1.45}
-  .category-card em{font-style:normal;color:#12386b;font-size:10px;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
-  .retailer-callout{margin-top:55px;padding:30px 34px;display:flex;align-items:center;justify-content:space-between;gap:30px;background:#12386b}
-  .retailer-callout h2{margin:0 0 7px;color:#fff;font-size:27px}
-  .retailer-callout p:not(.eyebrow){max-width:650px;margin:0;color:#dce7f2;font-size:13px;line-height:1.55}
-  .retailer-callout .eyebrow{margin-bottom:7px;color:#e7a1a4}
-  .retailer-actions{display:flex;align-items:center;gap:20px;flex:0 0 auto}
-  .retailer-actions .btn{background:#fff;color:#12386b;white-space:nowrap}
-  .callout-link{color:#fff;font-size:10px;font-weight:900;letter-spacing:.05em;text-decoration:none;text-transform:uppercase;white-space:nowrap}
-  .callout-link span{margin-left:5px}
-  @media(max-width:1000px){.brand-grid{grid-template-columns:repeat(3,1fr)}.category-grid{grid-template-columns:1fr}}
-  @media(max-width:760px){.products-header,.section-heading,.retailer-callout{grid-template-columns:1fr;display:flex;align-items:flex-start;flex-direction:column}.products-header{gap:18px}.brand-grid{grid-template-columns:repeat(2,1fr)}.retailer-actions{flex-wrap:wrap}}
-  @media(max-width:480px){.brand-grid{grid-template-columns:1fr}.brand-logo{height:145px}.section-heading h2{font-size:32px}}
+.products-header{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:45px;align-items:end;padding:18px 0 22px;border-bottom:1px solid #dce3ea}.products-header .page-title{margin:0}.products-header-copy{margin:0 0 2px;color:#68788b;font-size:13px;line-height:1.55;max-width:430px}.catalog-categories{padding:27px 0 0}.section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:30px}.section-heading h2{margin:0;color:#12386b;font-size:34px;line-height:1.05;letter-spacing:-.02em}.category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}.category-card{position:relative;min-height:195px;display:flex;flex-direction:column;justify-content:space-between;padding:21px;overflow:hidden;background:#f5f7f9;border:1px solid #d5dee8;text-decoration:none;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}.category-card:before{position:absolute;content:"";width:135px;height:135px;right:-52px;top:-52px;border-radius:50%;background:#e6edf5}.category-card:nth-child(2):before{background:#e1e9f2}.category-card:nth-child(3):before{background:#eee5e5}.category-card:hover{transform:translateY(-2px);border-color:#b7c7d8;box-shadow:0 10px 22px rgba(18,56,107,.08)}.category-topline{position:relative;z-index:1;display:flex;justify-content:space-between}.category-number{color:#d71920;font-size:10px;font-weight:900;letter-spacing:.12em}.category-count{color:#8492a2;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.category-card-content{position:relative;z-index:1}.category-card h3{margin:0 0 7px;color:#12386b;font-size:25px;line-height:1.05}.category-card p{max-width:390px;margin:0;color:#687788;font-size:12px;line-height:1.45}.category-action{position:relative;z-index:1;color:#12386b;font-size:10px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}.category-action b{margin-left:5px;color:#d71920;font-size:15px}.brands-section{padding:45px 0 70px;margin-top:45px;border-top:1px solid #dce3ea}.brands-intro{margin:8px 0 19px;color:#718096;font-size:12px}.view-all{color:#12386b;font-size:10px;font-weight:900;letter-spacing:.06em;text-decoration:none;text-transform:uppercase;white-space:nowrap}.view-all:hover{color:#d71920}.view-all span{margin-left:5px}.brand-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.brand-card{min-width:0;overflow:hidden;background:#fff;border:1px solid #dce3ea;text-decoration:none;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}.brand-card:hover{transform:translateY(-2px);border-color:#b9c8d7;box-shadow:0 10px 24px rgba(18,56,107,.08)}.brand-logo{height:110px;padding:15px;display:grid;place-items:center;background:#fafbfc}.brand-logo img{display:block;width:100%;height:100%;object-fit:contain}.brand-card-footer{min-height:58px;padding:10px 12px 11px;border-top:1px solid #edf0f3}.brand-card-footer strong{display:block;color:#12386b;font-size:12px;line-height:1.2}.brand-card-footer span{display:block;margin-top:4px;color:#7a8795;font-size:9px}@media(max-width:1000px){.products-header{grid-template-columns:1fr;gap:12px}.category-grid{grid-template-columns:1fr}.brand-grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:760px){.brand-grid{grid-template-columns:repeat(2,1fr)}.products-header .page-title{font-size:46px}}@media(max-width:480px){.brand-grid{grid-template-columns:1fr}.brand-logo{height:140px}.section-heading h2{font-size:30px}}
 </style>
 
 {% schema %}
