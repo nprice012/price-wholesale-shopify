@@ -1,34 +1,68 @@
-<section class="page-shell">
+<section class="page-shell product-page">
   <div class="container">
-    <div class="history-grid">
-      <div>
+    <div class="product-layout">
+      <div class="product-gallery">
         {% if product.featured_image %}
-          <img src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.featured_image.alt | escape }}" style="width:100%;border:1px solid var(--line);">
+          <div class="product-main-image"><img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}"></div>
         {% endif %}
       </div>
-      <div>
-        <p class="eyebrow">{{ product.vendor }}</p>
+
+      <div class="product-info">
+        {% if product.vendor != blank %}<p class="eyebrow">{{ product.vendor }}</p>{% endif %}
         <h1 class="page-title">{{ product.title }}</h1>
+        {% if product.description != blank %}<div class="rte product-description">{{ product.description }}</div>{% endif %}
+
         {% if customer.b2b? %}
-          <p style="font-size:24px;font-weight:800;color:var(--navy);">{{ product.selected_or_first_available_variant.price | money }}</p>
-          {% form 'product', product %}
-            <label for="Quantity-{{ section.id }}">Case quantity</label>
-            <input id="Quantity-{{ section.id }}" type="number" name="quantity" min="1" value="1" style="display:block;width:120px;padding:12px;margin:8px 0 16px;border:1px solid var(--line);">
-            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-            <button class="btn btn-primary" type="submit"{% unless product.selected_or_first_available_variant.available %} disabled{% endunless %}>{% if product.selected_or_first_available_variant.available %}Add to Order{% else %}Out of Stock{% endif %}</button>
-          {% endform %}
+          <div class="order-panel">
+            <div class="product-price-large">{{ product.selected_or_first_available_variant.price | money }}{% if product.price_varies %}<span>+</span>{% endif %}</div>
+            <p class="price-note">Wholesale price for your account</p>
+            {% form 'product', product %}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <div class="order-row">
+                <div>
+                  <label for="Quantity-{{ section.id }}">Quantity</label>
+                  <input id="Quantity-{{ section.id }}" type="number" name="quantity" min="1" value="1">
+                </div>
+                <button class="btn btn-primary" type="submit"{% unless product.selected_or_first_available_variant.available %} disabled{% endunless %}>{% if product.selected_or_first_available_variant.available %}Add to Order{% else %}Out of Stock{% endif %}</button>
+              </div>
+            {% endform %}
+          </div>
         {% else %}
-          <div class="card" style="margin-top:24px;">
-            <h3>Wholesale pricing is available to approved customers.</h3>
-            <p>Already a Price Wholesale customer? Log in with your B2B customer account to view pricing and place your order.</p>
+          <div class="login-panel">
+            <h2>Wholesale ordering for approved customers.</h2>
+            <p>Log in to see your account pricing and place an order online.</p>
             <a class="btn btn-primary" href="{{ routes.account_login_url }}">Customer Login</a>
+            <a class="text-link" href="/pages/become-a-customer">Not a customer yet? Apply for an account →</a>
           </div>
         {% endif %}
-        {% if product.description != blank %}<div class="rte" style="margin-top:30px;">{{ product.description }}</div>{% endif %}
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .product-layout { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr); gap:64px; align-items:start; }
+  .product-main-image { background:#f7f8fa; border:1px solid #dbe3ec; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; }
+  .product-main-image img { width:100%; height:100%; object-fit:contain; padding:32px; }
+  .product-info { padding-top:8px; }
+  .product-info .page-title { margin-bottom:20px; }
+  .product-description { color:#4b5563; line-height:1.7; }
+  .order-panel { margin-top:28px; padding:24px; background:#f7f8fa; border:1px solid #dbe3ec; }
+  .product-price-large { color:#12386b; font-size:30px; line-height:1; font-weight:900; }
+  .product-price-large span { margin-left:2px; }
+  .price-note { margin:7px 0 22px; color:#64748b; font-size:12px; }
+  .order-row { display:flex; align-items:end; gap:12px; }
+  .order-row label { display:block; margin-bottom:7px; color:#12386b; font-size:12px; font-weight:800; }
+  .order-row input { width:90px; height:46px; padding:0 12px; border:1px solid #cbd5e1; background:#fff; font-size:16px; }
+  .order-row .btn { height:46px; }
+  .login-panel { margin-top:28px; padding:28px; border-left:4px solid #d71920; background:#f7f8fa; }
+  .login-panel h2 { margin:0 0 8px; color:#12386b; font-size:21px; line-height:1.25; }
+  .login-panel p { margin:0 0 18px; color:#64748b; line-height:1.55; }
+  .text-link { display:block; margin-top:15px; color:#0b4ea2; font-size:13px; font-weight:700; text-decoration:none; }
+  .text-link:hover { color:#d71920; }
+  @media (max-width:800px) { .product-layout { grid-template-columns:1fr; gap:34px; } .product-info { padding-top:0; } }
+  @media (max-width:480px) { .order-row { align-items:stretch; flex-direction:column; } .order-row .btn { width:100%; } }
+</style>
 
 {% schema %}
 {
