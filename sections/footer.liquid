@@ -1,0 +1,38 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-title">Price Wholesale Distribution</div>
+        <p class="footer-copy">Family owned since 1921, serving wholesale customers throughout the Baltimore and Washington market with ice cream, beverages, snacks and foodservice products.</p>
+      </div>
+      <div>
+        <div class="footer-title">Company</div>
+        <div class="footer-links">
+          <a href="/pages/about-us">About Us</a>
+          <a href="/pages/brands">Brands</a>
+          <a href="/pages/service-area">Service Area</a>
+          <a href="/pages/contact">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-title">Customers</div>
+        <div class="footer-links">
+          <a href="{{ routes.account_login_url }}">Customer Login</a>
+          <a href="/pages/become-a-customer">Become a Customer</a>
+          <a href="{{ routes.collections_url }}">Wholesale Products</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {{ 'now' | date: '%Y' }} Price Wholesale Distribution. All rights reserved.</span>
+      <span>Serving Baltimore &amp; Washington since 1921.</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": []
+}
+{% endschema %}
