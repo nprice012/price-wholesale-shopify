@@ -2,8 +2,8 @@
   {
     "name": "Price Wholesale",
     "settings": [
-      {"type":"text","id":"company_phone","label":"Phone","default":""},
-      {"type":"text","id":"company_email","label":"Email","default":""},
+      {"type":"text","id":"company_phone","label":"Phone","default":"443-604-5677"},
+      {"type":"text","id":"company_email","label":"Email","default":"Nprice.icd@gmail.com"},
       {"type":"text","id":"service_area","label":"Service area","default":"Baltimore & Washington"}
     ]
   },
