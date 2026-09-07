@@ -2,14 +2,12 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        {% if section.settings.logo != blank %}
-          {{ section.settings.logo | image_url: width: 420 | image_tag: class: 'footer-logo', alt: 'Price Wholesale Distribution' }}
-        {% else %}
-          <div class="footer-logo-fallback">
+        <div class="footer-brand" data-footer-brand>
+          <span class="footer-brand-fallback">
             <span class="brand-name">PRICE</span>
             <span class="brand-sub">DISTRIBUTION</span>
-          </div>
-        {% endif %}
+          </span>
+        </div>
         <p class="footer-copy">Family owned since 1921. Serving wholesale customers throughout the Baltimore and Washington market with trusted brands and dependable service.</p>
         <div class="footer-contact">
           <a href="tel:4436045677">443-604-5677</a>
@@ -41,15 +39,28 @@
   </div>
 </footer>
 
+<script>
+  (function () {
+    var footer = document.querySelector('[data-footer-brand]');
+    var headerBrand = document.querySelector('.brand');
+    if (!footer || !headerBrand) return;
+    var logo = headerBrand.querySelector('.brand-logo, .brand-logo-fallback');
+    if (!logo) return;
+    var clone = logo.cloneNode(true);
+    clone.classList.remove('brand-logo');
+    clone.classList.add('footer-logo');
+    footer.innerHTML = '';
+    footer.appendChild(clone);
+  })();
+</script>
+
 <style>
-.footer-logo{display:block;width:154px;max-width:100%;height:auto;margin-bottom:18px}.footer-logo-fallback{display:inline-flex;flex-direction:column;line-height:.9;margin-bottom:18px;color:#fff}.footer-logo-fallback .brand-name{font-size:34px;font-weight:900;font-style:italic;letter-spacing:-.07em}.footer-logo-fallback .brand-sub{font-size:11px;font-weight:800;letter-spacing:.14em;margin-top:5px;color:#d9e7f6}.footer-copy{max-width:470px}.footer-contact{display:flex;flex-direction:column;gap:5px;margin-top:14px}.footer-contact a{color:#fff;text-decoration:none;font-weight:700}.footer-contact a:hover{text-decoration:underline}
+.footer-brand{min-height:54px;margin-bottom:18px}.footer-logo{display:block;width:154px;max-width:100%;height:auto}.footer-brand-fallback{display:inline-flex;flex-direction:column;line-height:.9;color:#fff}.footer-brand-fallback .brand-name{font-size:34px;font-weight:900;font-style:italic;letter-spacing:-.07em}.footer-brand-fallback .brand-sub{font-size:11px;font-weight:800;letter-spacing:.14em;margin-top:5px;color:#d9e7f6}.footer-copy{max-width:470px}.footer-contact{display:flex;flex-direction:column;gap:5px;margin-top:14px}.footer-contact a{color:#fff;text-decoration:none;font-weight:700}.footer-contact a:hover{text-decoration:underline}
 </style>
 
 {% schema %}
 {
   "name":"Footer",
-  "settings":[
-    {"type":"image_picker","id":"logo","label":"Footer logo (use the same logo as the header)"}
-  ]
+  "settings":[]
 }
 {% endschema %}
