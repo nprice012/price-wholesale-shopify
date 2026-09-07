@@ -11,27 +11,27 @@
     <section class="catalog-section">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Shop the Catalog</p>
+          <p class="eyebrow">Shop the catalog</p>
           <h2>Choose a category.</h2>
         </div>
       </div>
+
       <div class="category-grid">
         {% assign category_handles = 'ice-cream,beverages,food' | split: ',' %}
         {% assign category_titles = 'Ice Cream & Frozen,Beverages,Food' | split: ',' %}
-        {% assign category_descriptions = 'Ice cream, water ice, frozen novelties and related frozen products.,Juices, drinks and other beverage products for your cooler.,Food products available through our wholesale catalog.' | split: ',' %}
         {% assign category_numbers = '01,02,03' | split: ',' %}
+        {% assign category_actions = 'Shop Ice Cream & Frozen,Shop Beverages,Shop Food' | split: ',' %}
         {% for handle in category_handles %}
           {% assign collection = collections[handle] %}
           <a class="category-card category-card-{{ forloop.index }}" href="{% if collection %}{{ collection.url }}{% else %}{{ routes.collections_url }}/{{ handle }}{% endif %}">
-            <div class="category-topline">
+            <div class="category-top">
               <span class="category-number">{{ category_numbers[forloop.index0] }}</span>
               {% if collection %}<span class="category-count">{{ collection.all_products_count }} products</span>{% endif %}
             </div>
-            <div class="category-card-content">
+            <div class="category-bottom">
               <h3>{{ category_titles[forloop.index0] }}</h3>
-              <p>{{ category_descriptions[forloop.index0] }}</p>
+              <span class="category-button">{{ category_actions[forloop.index0] }} <b aria-hidden="true">→</b></span>
             </div>
-            <span class="category-button">Shop {{ category_titles[forloop.index0] }} <b aria-hidden="true">→</b></span>
           </a>
         {% endfor %}
       </div>
@@ -40,7 +40,7 @@
     <section class="brands-section">
       <div class="section-heading brands-heading">
         <div>
-          <p class="eyebrow">Brands We Distribute</p>
+          <p class="eyebrow">Brands we distribute</p>
           <h2>Shop by brand.</h2>
         </div>
         <a href="/pages/brands" class="view-all">View all brands <span aria-hidden="true">→</span></a>
@@ -63,7 +63,7 @@
 
     <div class="retailer-callout">
       <div>
-        <p class="eyebrow">For Retail Operators</p>
+        <p class="eyebrow">For retail operators</p>
         <h2>Looking for something specific?</h2>
         <p>Don't see the brand, flavor or package you need? Contact us and we'll help you find it.</p>
       </div>
@@ -79,29 +79,29 @@
   .products-header{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:60px;align-items:end;padding:6px 0 28px;border-bottom:1px solid #dce3ea}
   .products-header .page-title{margin:0;max-width:800px}
   .products-header-copy{margin:0 0 4px;color:#68788b;font-size:14px;line-height:1.65;max-width:430px}
-  .catalog-section{padding:32px 0 0}
+  .catalog-section{padding:34px 0 0}
   .section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:30px}
   .section-heading h2{margin:0;color:#12386b;font-size:38px;line-height:1.05;letter-spacing:-.02em}
-  .category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
-  .category-card{min-height:205px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;background:#f4f7fa;border:1px solid #cbd7e2;text-decoration:none;transition:transform .18s ease,box-shadow .18s ease}
-  .category-card:after{content:"";position:absolute;width:150px;height:150px;right:-60px;top:-60px;border-radius:50%;background:#e5ebf2}
-  .category-card-2:after{background:#e0e8f2}
-  .category-card-3:after{background:#eee4e4}
-  .category-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(18,56,107,.10)}
-  .category-topline{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center}
-  .category-number{color:#d71920;font-size:11px;font-weight:900;letter-spacing:.12em}
-  .category-count{color:#7d8b9b;font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
-  .category-card-content{position:relative;z-index:1}
-  .category-card h3{margin:0 0 7px;color:#12386b;font-size:25px;line-height:1.08}
-  .category-card p{margin:0;max-width:390px;color:#687788;font-size:12px;line-height:1.5}
-  .category-button{position:relative;z-index:1;align-self:flex-start;display:inline-flex;align-items:center;gap:7px;padding:10px 14px;background:#12386b;color:#fff;font-size:10px;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
-  .category-button b{color:#fff;font-size:15px;line-height:1}
-  .category-card-2 .category-button{background:#d71920}
-  .category-card-3 .category-button{background:#12386b}
+  .category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+  .category-card{min-height:245px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;text-decoration:none;border:0;transition:transform .18s ease,box-shadow .18s ease}
+  .category-card:after{content:"";position:absolute;width:190px;height:190px;right:-75px;top:-75px;border-radius:50%;background:rgba(255,255,255,.09)}
+  .category-card-1{background:#12386b}
+  .category-card-2{background:#d71920}
+  .category-card-3{background:#315b82}
+  .category-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(18,56,107,.16)}
+  .category-top,.category-bottom{position:relative;z-index:1}
+  .category-top{display:flex;justify-content:space-between;align-items:center}
+  .category-number{color:#fff;font-size:11px;font-weight:900;letter-spacing:.12em}
+  .category-count{color:rgba(255,255,255,.72);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .category-bottom h3{margin:0 0 22px;color:#fff;font-size:28px;line-height:1.05;letter-spacing:-.02em}
+  .category-button{display:inline-flex;align-items:center;gap:8px;padding:12px 15px;background:#fff;color:#12386b;font-size:10px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+  .category-card-2 .category-button{color:#d71920}
+  .category-card-3 .category-button{color:#315b82}
+  .category-button b{font-size:15px;line-height:1}
 
-  .brands-section{padding:58px 0 0;margin-top:48px;border-top:1px solid #dce3ea}
-  .brands-heading{padding-top:0}
+  .brands-section{padding:60px 0 0;margin-top:54px;border-top:1px solid #dce3ea}
   .brands-intro{margin:9px 0 22px;color:#718096;font-size:13px}
+  .brands-heading h2{font-size:38px}
   .view-all{color:#12386b;font-size:11px;font-weight:900;letter-spacing:.06em;text-decoration:none;text-transform:uppercase;white-space:nowrap}
   .view-all:hover{color:#d71920}
   .view-all span{margin-left:5px}
